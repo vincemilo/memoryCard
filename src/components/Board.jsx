@@ -1,25 +1,46 @@
 import { useState } from "react";
 import shuffle from "../functions/shuffle";
 import Card from "./Card";
+import ScoreBoard from "./ScoreBoard";
 
 export default function Board() {
-  const arr = [];
+  const cardArr = [];
   for (let i = 0; i < 12; i += 1) {
-    arr.push(<Card id={i} key={i} />);
+    cardArr.push(<Card id={i} key={i} />);
   }
-  const [cards, setCards] = useState(arr);
-  function handleClick() {
+  const [cards, setCards] = useState(cardArr);
+  const [clicked, setClicked] = useState([]);
+  const [currentScore, setCurrentScore] = useState(0);
+
+  function checkScore(id) {
+    if (clicked.includes(id)) {
+      setCurrentScore(0);
+      setClicked([]);
+    } else {
+      setClicked([...clicked, id]);
+      setCurrentScore(currentScore + 1);
+    }
+  }
+
+  function handleClick(e) {
     const newCards = [...cards];
     shuffle(newCards);
     setCards(newCards);
+    checkScore(e.target.id);
   }
+
   return (
     <div className="board">
-      {cards.map((e) => (
-        <div className="card" onClick={handleClick} key={e.key}>
-          {e}
-        </div>
-      ))}
+      <div className="score">
+        <ScoreBoard updatedScore={currentScore} />
+      </div>
+      <div className="cards">
+        {cards.map((e) => (
+          <div className="card" id={e.key} onClick={handleClick} key={e.key}>
+            {e}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
