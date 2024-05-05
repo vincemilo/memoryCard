@@ -5,7 +5,7 @@ import ScoreBoard from "./ScoreBoard";
 
 export default function Board() {
   const cardArr = [];
-  for (let i = 0; i < 12; i += 1) {
+  for (let i = 1; i < 13; i += 1) {
     cardArr.push(<Card id={i} key={i} />);
   }
   const [cards, setCards] = useState(cardArr);
