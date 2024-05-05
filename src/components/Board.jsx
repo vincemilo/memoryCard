@@ -31,6 +31,8 @@ export default function Board() {
 
   return (
     <div className="board">
+      <h1>Memory Card Game</h1>
+      <h2>Try not to click the same animal twice!</h2>
       <div className="score">
         <ScoreBoard updatedScore={currentScore} />
       </div>
